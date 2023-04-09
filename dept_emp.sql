@@ -18,14 +18,28 @@ CREATE TABLE emp(
 -- 자료 삽입
 INSERT INTO dept VALUES ('1000', '인사팀');
 INSERT INTO dept VALUES ('1001', '총무팀');
+INSERT INTO dept VALUES ('1002', '마케팅팀');
 
 INSERT INTO emp VALUES (100, '임베스트', 2000000, SYSDATE, '1000');
 INSERT INTO emp VALUES (101, '을지문덕', 3000000, SYSDATE, '1001');
 INSERT INTO emp VALUES (102, '연개소문', 3000000, SYSDATE, '1002');
+INSERT INTO emp VALUES (103, '세종대왕', 5000000, SYSDATE, '1000');
+INSERT INTO emp VALUES (104, '신사임당', 3000000, SYSDATE, '1002');
 
 -- 자료검색
 select * from dept;
 select * from emp;
+
+-- 부서별 급여 평균 구하기
+-- 부서번호, 부서명, 급여, 급여평균
+
+select 
+    deptno 부서번호,
+    AVG(sal) 급여평균
+from emp
+GROUP BY deptno;
+
+
 
 -- 부서 자료 삭제
 DELETE FROM dept WHERE deptno ='1001';

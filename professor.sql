@@ -5,8 +5,8 @@ CREATE TABLE professor(
     major   VARCHAR2(30)  NOT NULL
 );
 
--- 자료설명
-DESC professor;
+-- 자료설명 (정렬과 다름 ORDER BY 컬럼명 DESC;)
+DESC professor; 
 
 -- 교수 자료 삽입
 INSERT INTO professor(pnumber, pname, major) VALUES (301, '오용철', '데이터베이스');
@@ -34,6 +34,10 @@ SELECT * FROM professor WHERE major LIKE '%개론%';
 -- 전공 과목을 모두 검색하시오
 -- 중복을 포함하지 않은 키워드 (DISTINCT)
 SELECT DISTINCT major FROM professor;
+
+-- SELECT COUNT (T_DEPT) AS "전체 개수",
+-- COUNT (DISTINCT(T_DEPT)) AS "중복 제거"
+-- FROM TEST_USER;
 
 -- OR 연산 사용, IN(값,값)함수 사용
 -- 전공이 '데이터베이스' 또는(혹은) '화학개론'인 자료를 검색하시오
