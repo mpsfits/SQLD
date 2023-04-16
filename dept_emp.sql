@@ -26,6 +26,17 @@ INSERT INTO emp VALUES (102, '연개소문', 3000000, SYSDATE, '1002');
 INSERT INTO emp VALUES (103, '세종대왕', 5000000, SYSDATE, '1000');
 INSERT INTO emp VALUES (104, '신사임당', 3000000, SYSDATE, '1002');
 
+-- 컬럼명 변경 : Commit 안해도 됨 insert delte 경우는 커밋
+-- DML Commit 명령어를 통해 Transaction을 종료해야 해당 변경 사항이 테이블에 반영된다.
+-- https://velog.io/@alicesykim95/DB-DDL-DML-DCL-TCL%EC%9D%B4%EB%9E%80
+-- 데이터 정의 언어(DDL: Data Definition Language) : DDL은 명령어를 입력하는 순간 작업이 즉시 반영(Auto Commit)되기 때문에 사용할 때 주의해야 한다. CREATE / ALTER 수정 / DROP 삭제 / RENAME /TRUNCATE 테이블을 초기화하는 역할  
+-- 데이터 조작 언어(DML:Data Manipulation Language) :
+-- 데이터 제어 언어(DCL:Date Control Language) :
+-- 트랜잭션 제어 언어(TCL: Transaction Control Language) : 
+
+ALTER TABLE emp RENAME COLUMN sal to salary;
+
+
 -- 자료검색
 select * from dept;
 select * from emp;
@@ -40,7 +51,6 @@ from emp
 GROUP BY deptno;
 
 
-
 -- 부서 자료 삭제
 DELETE FROM dept WHERE deptno ='1001';
 
@@ -48,18 +58,6 @@ DROP TABLE dept;
 DROP TABLE emp;
 
 DESC emp;
-
--- 컬럼추가
-ALTER TABLE emp
-    ADD (age NUMBER(3) DEFAULT 1);
-    
--- 컬럼 변경 
-ALTER TABLE emp
- MODIFY ename VARCHAR2(40) NOT NULL;
-
--- 컬럼 삭제
-ALTER TABLE emp
-    DROP COLUMN age;
 
 -- 컬럼명 변경
 ALTER TABLE emp
@@ -69,4 +67,6 @@ DROP TABLE emp;
 DROP TABLE emp CASCADE CONSTRAINTS;
 DESC emp;
 
-
+-- 자료 변경
+UPDATE dept SET deptname ='영업팀'
+WHERE deptno = '1002';
