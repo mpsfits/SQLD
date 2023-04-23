@@ -44,12 +44,12 @@ FROM DUAL;
 -- DATE + NUMBER : 날짜에서 일수(day)를 더함
 -- DATE - NUMBER : 날짜에서 일수(day)를 뺌
 
-SELECT SYSDATE FROM DUAL;  --현재 날짜
+SELECT SYSDATE FROM DUAL;  --현재 날짜 SYSDATE
 SELECT SYSDATE, SYSDATE+3, SYSDATE-3 FROM DUAL;
 
 -- 특정한 날짜에서 연산
--- TO_DATE(날짜문자열): 문자를 날짜로 변환하기
-SELECT TO_DATE('2023-4-1') -10 결과1, 
+-- TO_DATE(날짜문자열): 문자를 날짜로 변환하기 WHY 문자니까 날짜로 바꾸어야 함
+SELECT TO_DATE('2023-4-1') -10 결과1,
        TO_DATE('2023-4-1') +10 결과2
 FROM DUAL;
 
@@ -64,8 +64,8 @@ FROM DUAL;
 -- MONTHS_BETWEEN(): 두 날짜 사이의 개월수를 계산
 -- 입사일에서 퇴사일까지의 개월수 계산
 SELECT
-    ROUND(MONTHS_BETWEEN(TO_DATE('2022-11-30'),
-    TO_DATE('2022-1-1')),0) 총개월수
+    ROUND(MONTHS_BETWEEN(TO_DATE('2022-11-30'), -- 나중날짜가 먼저 옴
+        TO_DATE('2022-1-1')),0) 총개월수
 FROM DUAL;
 
 -- 숫자 변환 함수
@@ -75,7 +75,7 @@ SELECT TO_NUMBER('300') FROM DUAL; -- 함수를 써서 수동 타입 변환 함수
 
 -- 날짜 형식 변환 (날짜를 문자열로 변환)
 SELECT 
-    TO_CHAR(SYSDATE, 'YYYY-MM-DD') 날짜,
+    TO_CHAR(SYSDATE, 'YYYY/MM/DD') 날짜, -- 'YYYY-MM-DD'
     TO_CHAR(SYSDATE, 'YYYY')연도,
     TO_CHAR(SYSDATE, 'MM')월,
     TO_CHAR(SYSDATE, 'DD')일
@@ -88,9 +88,12 @@ SELECT
 FROM DUAL;
 
 
+-- 4월 16일 날짜형식으로 바꾸기
+SELECT TO_CHAR(TO_DATE('2023/04/16'), 'YYYY/MM/DD')
+FROM DUAL;
 
-
-
+SELECT TO_CHAR(TO_DATE('2023-4-16'), 'YYYY-MM-DD')
+FROM DUAL;
 
 
 

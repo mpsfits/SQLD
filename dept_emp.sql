@@ -19,12 +19,16 @@ CREATE TABLE emp(
 INSERT INTO dept VALUES ('1000', '인사팀');
 INSERT INTO dept VALUES ('1001', '총무팀');
 INSERT INTO dept VALUES ('1002', '마케팅팀');
+INSERT INTO dept VALUES ('1003', 'IT팀');
+
 
 INSERT INTO emp VALUES (100, '임베스트', 2000000, SYSDATE, '1000');
 INSERT INTO emp VALUES (101, '을지문덕', 3000000, SYSDATE, '1001');
 INSERT INTO emp VALUES (102, '연개소문', 3000000, SYSDATE, '1002');
 INSERT INTO emp VALUES (103, '세종대왕', 5000000, SYSDATE, '1000');
 INSERT INTO emp VALUES (104, '신사임당', 3000000, SYSDATE, '1002');
+INSERT INTO emp VALUES (106, '정조대왕', 4000000, SYSDATE, '1002', '남자');
+
 
 -- 컬럼명 변경 : Commit 안해도 됨 insert delte 경우는 커밋
 -- DML Commit 명령어를 통해 Transaction을 종료해야 해당 변경 사항이 테이블에 반영된다.
@@ -70,3 +74,48 @@ DESC emp;
 -- 자료 변경
 UPDATE dept SET deptname ='영업팀'
 WHERE deptno = '1002';
+
+-- 오라클 방식 JOIN : 부서와 사원의 모든 정보를 검색하시오.
+SELECT *
+FROM dept, emp
+WHERE dept.deptno = emp.deptno;
+
+-- 오라클 방식 JOIN : 부서의 이름과 부서에 소속된 사원의 모든 정보를 검색하시오.
+SELECT dept.deptname, emp.ename
+FROM dept, emp
+WHERE dept.deptno = emp.deptno;
+
+-- 사원의 이름과 사원이 없는 부서이름을 검색하시오!
+SELECT *
+FROM dept, emp
+WHERE dept.deptno = emp.deptno(+);
+
+-- 부서의 이름과 부서의 소속되지 않은 사원의 이름도 검색하시오!
+SELECT dept.deptname, emp.ename -- 테이블 꼭 지칭 안해도 나옴
+FROM dept, emp
+WHERE dept.deptno = emp.deptno(+)
+ORDER BY dept.deptno;
+
+-- INNER JOIN ON 방식으로 검색
+-- 부서의 이름과 부서의 소속된 사원의 이름을 검색하시오.
+SELECT dept.deptname, emp.ename
+FROM dept INNER JOIN emp
+    ON dept.deptno = emp.deptno
+    ORDER BY dept.deptno;
+
+-- LEFT JOIN ON 방식으로 검색
+-- 부서의 이름과 부서에 소속된 사원의 이름을 검색하시오
+SELECT dept.deptname, emp.ename
+FROM dept LEFT OUTER JOIN emp  --컬럼과 테이블을 불러 놓고
+    ON dept.deptno = emp.deptno -- 조건에 맞는 조인을 한다. 
+    ORDER BY dept.deptno;
+
+
+
+
+
+
+
+
+
+
