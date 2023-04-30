@@ -9,6 +9,6 @@ INSERT INTO exl(column1, column2) VALUES ('abc','abc');
 INSERT INTO exl(column1, column2) VALUES ('사과','사과');
 
 -- 데이터 검색 LENGTH 글자길이 / 별칭 alias 사용 앞에 AS를 붙임 (생략도 가능)
-SELECT column1, LENGTH(column1) len1
-       column2, LENGTH(column2) len2
+SELECT column1, LENGTH(column1) as len1, LENGTHB (column1) as col1_bytes,
+       column2, LENGTH(column2) as len2, LENGTHB (column2) as col2_bytes
 from exl;
