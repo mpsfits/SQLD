@@ -55,7 +55,33 @@ SELECT *
 FROM board 
 WHERE ROWID ='AAAStUAAHAAAAGcAAB';
 
+SELECT * FROM board 
+WHERE writer = '관리자';
 
+--인덱스 형성
+-- 인덱스 범위 스캔 RANGE SCAN
+CREATE INDEX idx_admin ON board(writer);
+
+-- 인덱스 삭제
+DROP INDEX idx_admin;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- 인덱스 생성
 
 
 

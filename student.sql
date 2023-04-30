@@ -20,16 +20,24 @@ CREATE TABLE student(
     
 );
 
+-- 기존에 만든 테이블에서 새롭게 학점(point)이라는 컬럼 추가  : ALTER
+ALTER TABLE student ADD point NUMBER(3); -- FLOAT 오라클 실수자료형, 4.5 점까지 합산해야 3자리
+
+-- 테이블에서 소수점 수정
+ALTER TABLE student MODIFY point NUMBER(3,2); -- (소수 둘째자리와 점 포함 총 세자리임) 
+
 -- 학생 자료 삽입
 INSERT INTO student VALUES(20211234, '이산', 22, '여', '서울시 종로구', '소프트웨어학과', 301, 3.5);
-INSERT INTO student VALUES(20211235, '박대양', 25, '남', '서울시 성북구', '전기전자공학과', 501);
+INSERT INTO student VALUES(20211235, '박대양', 25, '남', '서울시 성북구', '전기전자공학과', 501, 3.6);
 INSERT INTO student VALUES(20211236, '한비야', 33, '여', '수원시 장안구', '전기전자공학과', 501, 4.2);
-INSERT INTO student(snumber, sname, age, cname, pnumber) VALUES(20211237, '김산', 33, '화학공학과', 401);
-INSERT INTO student(snumber, sname, age, cname, pnumber) VALUES(20211238, '김산', 15, '소프트웨어학과', 302);
+-- INSERT INTO student(snumber, sname, age, cname, pnumber) VALUES(20211237, '김산', 33, '화학공학과', 401);
+-- INSERT INTO student(snumber, sname, age, cname, pnumber) VALUES(20211238, '김산', 15, '소프트웨어학과', 302);
 INSERT INTO student VALUES(20211239, '강감찬', 43, '남', '수원시 장안구', '전기전자공학과', 501, 4.1);
 INSERT INTO student VALUES(20211240, '강감찬', 43, '남', '수원시 장안구', '전기전자공학과', 501, 4.1);
 INSERT INTO student VALUES(20211241, '이순신', 37, '남', '수원시 장안구', '전기전자공학과', 301, 3.6);
 INSERT INTO student VALUES(20211242, '이강', 22, '남', '수원시 장안구', '전기전자공학과', 302, 4.3);
+
+
 
 
 -- 학생 자료 검색
@@ -99,11 +107,9 @@ FROM student;
 SELECT AVG(age) 평균나이, MAX (age) 최고나이, MIN (age) 최저나이
 FROM student;
 
--- 기존에 만든 테이블에서 새롭게 학점(point)이라는 컬럼 추가  : ALTER
-ALTER TABLE student ADD point NUMBER(3); -- FLOAT 오라클 실수자료형, 4.5 점까지 합산해야 3자리
 
--- 테이블에서 소수점 수정
-ALTER TABLE student MODIFY point NUMBER(3,2); -- (소수 둘째자리와 점 포함 총 세자리임) 
+
+
 
 -- 학점이 NULL인 학생 삭제
 DELETE FROM student
@@ -149,4 +155,6 @@ HAVING AVG(point) < 4.0; -- GROUP BY의 조건절은 HAVING  (그룹에서 가진 것은 무엇
 
 
 DESC student;
+
+DELETE FROM student;
 
