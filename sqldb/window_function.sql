@@ -52,6 +52,54 @@ SELECT 이름,
        ROW_NUMBER() OVER (ORDER BY 국어 DESC) ROW_NUMBER_RANK  -- RANK()매개변수 없음 OVER 윈도우 함수 
 FROM exam_score;
 
+-- 누적값 구하기
+-- 주문테이블 
+CREATE TABLE t_order(
+    order_date DATE,
+    order_cnt  NUMBER
+);
+
+INSERT INTO t_order VALUES ('20210801', 10);
+INSERT INTO t_order VALUES ('20210802', 12);
+INSERT INTO t_order VALUES ('20210803', 6);
+INSERT INTO t_order VALUES ('20210804', 8);
+INSERT INTO t_order VALUES ('20210805', 10);
+
+SELECT * FROM t_order;
+
+
+-- 주문일별 주문수량의 누적 합계
+SELECT order_date, 
+       order_cnt,
+       SUM(order_cnt) OVER(ORDER BY order_date) AS SUM
+    FROM t_order;
+
+-- 주문일별 주문수량의 누적합계 (내림차순)
+-- WINDOWING ()관련용어 : ROWS RANGE 
+-- UNBOUNDED PRECEDING (첫 행), UNBOUNDED FOLLOWING (마지막행)
+-- CURRENT ROW (시작 위치가 현재행임)
+
+-- SELECT WINDOW_FUNCTION (ARGUMENTS) 매개변수
+-- OVER (PARTITION BY 칼럼
+-- OVER BY WINDOWING절)
+        
+-- 파티션별로 묶지 않으면 제대로 되지 안는 경우가 있다. 
+
+SELECT order_date, 
+       order_cnt,
+       SUM(order_cnt) OVER(ORDER BY order_date
+            ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS SUM
+    FROM t_order;
+
+-- 주문일별 주문수량의 누적합계 (오름차순)
+
+SELECT order_date, 
+       order_cnt,
+       SUM(order_cnt) OVER(ORDER BY order_date
+            ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING) AS SUM
+    FROM t_order;
+
+
 DROP TABLE exam_score;
 
 
