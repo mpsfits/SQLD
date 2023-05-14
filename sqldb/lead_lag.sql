@@ -1,0 +1,70 @@
+-- 행 순서 관련 함수
+CREATE TABLE EMP_INFO(
+    EMP_NO VARCHAR(3),
+    NAME   VARCHAR(20),
+    SAL    NUMBER
+);
+
+INSERT INTO EMP_INFO VALUES ('100', 'Steven', 24000);
+INSERT INTO EMP_INFO VALUES ('101', 'Neena', 17000);
+INSERT INTO EMP_INFO VALUES ('102', 'Lex', 17000);
+INSERT INTO EMP_INFO VALUES ('108', 'Nancy', 12000);
+INSERT INTO EMP_INFO VALUES ('109', 'Daniel', 8200);
+INSERT INTO EMP_INFO VALUES ('110', 'John', 24000);
+
+SELECT * FROM EMP_INFO;
+
+-- LEAD (컬럼명, 수) : 하위 행의 값을 상위 행에 출력함
+-- LEAD (컬럼명, 수,-1) : NULL값을 -1으로 대체함
+SELECT EMP_NO, NAME, SAL,
+    LEAD(SAL,3) OVER (ORDER BY SAL DESC) AS SAL2,  --ORDER BY 해줘야 오류 안남   3행이 아니라 3행 아래 4행부터
+    LEAD(SAL,3,-1) OVER (ORDER BY SAL DESC) AS SAL2
+FROM EMP_INFO;
+
+-- LAG (컬럼명, 수) : 상위 행의 값을 하위 행에 출력함
+-- LAG (컬럼명, 수, 0) : NULL값을 0으로 대체함
+SELECT EMP_NO, NAME, SAL,
+    LAG(SAL,3) OVER (ORDER BY SAL DESC) AS SAL2, --ORDER BY 해줘야 오류 안남   3행이 아니라 3행 아래 4행부터
+    LAG(SAL,3,0) OVER (ORDER BY SAL DESC) AS SAL2
+    
+FROM EMP_INFO;
+
+-- 누적값 계산하기 : ORDER BY EMP_NO 필수
+SELECT EMP_NO, NAME, SAL,
+    SUM (SAL) OVER (ORDER BY EMP_NO) AS 급여합계
+FROM EMP_INFO;
+
+-- 누적값 계산하기(오름차순) --윈도우함수
+SELECT EMP_NO, NAME, SAL,
+    SUM (SAL) OVER (ORDER BY EMP_NO
+                    ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS 급여합계
+FROM EMP_INFO;
+
+
+-- 누적값 계산하기(내림차순)
+SELECT EMP_NO, NAME, SAL,
+    SUM (SAL) OVER (ORDER BY EMP_NO
+                    ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING) AS 급여합계
+FROM EMP_INFO;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

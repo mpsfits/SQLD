@@ -29,10 +29,32 @@ SELECT COUNT(*) 인원수, SUM(salary) 급여합계
 FROM dept;
 -- GROUP BY dept_no;
 
+-- 부서 전체의 급여 누적합계 (오름차순)
+SELECT dept_no,
+       job_nm,
+       salary,
+       SUM(salary) OVER (ORDER BY dept_no
+            ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) SAL_SUM
+                                   -- 윈도우 함수를 넣어야
+FROM dept;
+
+-- 부서 전체의 급여 누적합계 (내림차순)
+SELECT dept_no,
+       job_nm,
+       salary,
+       SUM(salary) OVER (ORDER BY dept_no
+            ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING ) SAL_SUM
+                                   -- 윈도우 함수를 넣어야
+FROM dept;
+
+
 -- 부서별 직업이름별 인원수 급여합계 컬럼을 중심으로 
-SELECT dept_no, job_nm, COUNT(*)인원수, SUM(salary) 급여합계
+SELECT dept_no, job_nm, COUNT(*)인원,수, SUM(salary) 급여합계
 FROM dept
 GROUP BY dept_no, job_nm;
+
+
+
 
 -- 부서별 직업별 급여 소계와 전체 총계
 -- GROUP BY ROLLUP(컬럼명)
@@ -56,6 +78,33 @@ SELECT dept_no, job_nm, SUM(salary) 급여합계
 FROM dept
 GROUP BY GROUPING SETS (dept_no, job_nm)
 ORDER BY dept_no;
+
+-- GROUPING ()함수 : 결과가 1이면 그룹핑 됨 0이면 아님
+SELECT GROUPING(dept_no), 
+       GROUPING(job_nm), 
+       dept_no,
+       job_nm,
+       SUM(salary) 급여합계
+FROM dept
+GROUP BY ROLLUP (dept_no, job_nm)
+ORDER BY dept_no; 
+
+-- NULL을 소계, 총계로 변경하기
+SELECT 
+       CASE GROUPING(dept_no) WHEN 1 THEN '총계'
+            ELSE dept_no
+       END dept_no, 
+       SUM(salary) 급여합계
+FROM dept
+GROUP BY ROLLUP (dept_no, job_nm)
+ORDER BY dept_no; 
+
+
+
+
+
+
+
 
 
 

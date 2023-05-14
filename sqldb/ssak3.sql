@@ -31,16 +31,30 @@ INSERT INTO SSAK3 VALUES (7, '다시 여기 바닷가(Acoustic Ver.)', '20200803', ROUN
 
 SELECT * FROM SSAK3;
 
--- 다운로드 수 누적값 구하기
+-- 무작위 랜덤 수 출력
+SELECT ROUND(DBMS_RANDOM.VALUE(100,1000),0) 다운로드수 FROM DUAL;
+
+
+-- 다운로드 수 누적값 구하기 (셀프조인)
 SELECT A.NO, 
        MAX(A.TITLE) TITLE,  -- 집계 함수이므로 GROUP BY 해주기
        A.COUNT_DT, 
        MAX(A.DOWNLOAD_CNT) DOWNLOAD_CNT, -- 집계 함수이므로 GROUP BY 해주기
        SUM(B.DOWNLOAD_CNT) "sum" -- 따옴표 안하면 대문자 SUM / 따옴포 하면 소문자
-FROM SSAK3 A, SSAK3 B
+FROM SSAK3 A, SSAK3 B  --셀프조인
 WHERE A.NO = B.NO
     AND A.COUNT_DT >= B.COUNT_DT
 GROUP BY A.NO, A.COUNT_DT;
+
+-- 날짜순으로 정렬한 다운로드 수 누적값 구하기
+SELECT NO, TITLE, COUNT_DT, DOWNLOAD_CNT,
+    SUM(DOWNLOAD_CNT) OVER(ORDER BY COUNT_DT) "누적값"    
+  FROM SSAK3;
+
+-- 노래 번호별 날짜순으로 정렬한 다운로드 수 누적값 구하기
+SELECT NO, TITLE, COUNT_DT, DOWNLOAD_CNT,
+    SUM(DOWNLOAD_CNT) OVER(PARTITION BY NO ORDER BY COUNT_DT) "누적값"    
+  FROM SSAK3;
 
 -- windowing 함수로 검색하기  -- 셀프 조인보다 간단함  --f10 실행시 비용이 적게 듬 : 3 
 SELECT NO, TITLE, COUNT_DT, DOWNLOAD_CNT,
