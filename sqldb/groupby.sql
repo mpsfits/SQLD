@@ -10,6 +10,8 @@ INSERT INTO dept VALUES ('100', '관리자', 4300000);
 INSERT INTO dept VALUES ('200', '증권사', 5000000);
 INSERT INTO dept VALUES ('200', '데이터분석가', 4000000);
 INSERT INTO dept VALUES ('200', '관리자', 6000000);
+INSERT INTO dept VALUES ('300', '관리자', 6000000);
+INSERT INTO dept VALUES ('400', '관리자', 6000000);
 
 SELECT * FROM dept;
 
@@ -49,10 +51,33 @@ FROM dept;
 
 
 -- 부서별 직업이름별 인원수 급여합계 컬럼을 중심으로 
-SELECT dept_no, job_nm, COUNT(*)인원,수, SUM(salary) 급여합계
+SELECT dept_no, job_nm, COUNT(*)인원수, SUM(salary) 급여합계
 FROM dept
 GROUP BY dept_no, job_nm;
 
+----
+SELECT dept_no, job_nm, COUNT(*)인원수, SUM(salary) 급여합계
+FROM dept
+GROUP BY dept_no, job_nm,(dept_no, job_nm);
+
+
+SELECT dept_no, job_nm, COUNT(*)인원수, SUM(salary) 급여합계
+FROM dept
+GROUP BY ROLLUP (dept_no, job_nm);
+
+SELECT dept_no, job_nm, COUNT(*)인원수, SUM(salary) 급여합계
+FROM dept
+GROUP BY CUBE (dept_no, job_nm);
+
+SELECT dept_no, job_nm, COUNT(*)인원수, SUM(salary) 급여합계
+FROM dept
+GROUP BY GROUPING SETS (dept_no, job_nm, (dept_no, job_nm),());
+
+SELECT dept_no, job_nm, COUNT(*)인원수, SUM(salary) 급여합계
+FROM dept
+GROUP BY GROUPING SETS(dept_no, job_nm,());
+
+----
 
 
 

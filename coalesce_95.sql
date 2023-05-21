@@ -1,0 +1,2 @@
+SELECT COALESCE (NULL,'2','1') FROM DUAL;
+-- NULL 아닌 첫번째 값 리턴

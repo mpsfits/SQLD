@@ -1,10 +1,10 @@
 -- 부서와 사원 tabel 2
-CREATE TABLE dept(
+CREATE TABLE t_dept(
     deptno VARCHAR2(4) PRIMARY KEY,
     deptname VARCHAR2(20)
 );
 
-CREATE TABLE emp(
+CREATE TABLE t_emp(
     empno NUMBER(10),
     ename VARCHAR2(20),
     sal   NUMBER(10,2) default 0,
@@ -12,22 +12,23 @@ CREATE TABLE emp(
     deptno VARCHAR2(4) NOT NULL,
     CONSTRAINT emppk PRIMARY KEY(empno), --emppk 이름만 달리하면됨 앞 전의 내용과 겹쳐서 테이블 생성이 안됨 --emp 기본키
     CONSTRAINT empfk FOREIGN KEY(deptno) --외래키
-    REFERENCES dept(deptno) ON DELETE CASCADE
+    REFERENCES t_dept(deptno) ON DELETE CASCADE
 );
 
 -- 자료 삽입
-INSERT INTO dept VALUES ('1000', '인사팀');
-INSERT INTO dept VALUES ('1001', '총무팀');
-INSERT INTO dept VALUES ('1002', '마케팅팀');
-INSERT INTO dept VALUES ('1003', 'IT팀');
+INSERT INTO t_dept VALUES ('1000', '인사팀');
+INSERT INTO t_dept VALUES ('1001', '총무팀');
+INSERT INTO t_dept VALUES ('1002', '마케팅팀');
+INSERT INTO t_dept VALUES ('1003', 'IT팀');
 
 
-INSERT INTO emp VALUES (100, '임베스트', 2000000, SYSDATE, '1000');
-INSERT INTO emp VALUES (101, '을지문덕', 3000000, SYSDATE, '1001');
-INSERT INTO emp VALUES (102, '연개소문', 3000000, SYSDATE, '1002');
-INSERT INTO emp VALUES (103, '세종대왕', 5000000, SYSDATE, '1000');
-INSERT INTO emp VALUES (104, '신사임당', 3000000, SYSDATE, '1002');
-INSERT INTO emp VALUES (106, '정조대왕', 4000000, SYSDATE, '1002', '남자');
+INSERT INTO t_emp VALUES (100, '임베스트', 2000000, SYSDATE, '1000');
+INSERT INTO t_emp VALUES (101, '을지문덕', 3000000, SYSDATE, '1001');
+INSERT INTO t_emp VALUES (102, '연개소문', 3000000, SYSDATE, '1002');
+INSERT INTO t_emp VALUES (103, '세종대왕', 5000000, SYSDATE, '1000');
+INSERT INTO t_emp VALUES (104, '신사임당', 3000000, SYSDATE, '1002');
+INSERT INTO t_emp VALUES (105, '신사임당', 3000000, SYSDATE, '1003');
+INSERT INTO t_emp VALUES (106, '정조대왕', 4000000, SYSDATE, '1002', '남자');
 
 
 -- 컬럼명 변경 : Commit 안해도 됨 insert delte 경우는 커밋

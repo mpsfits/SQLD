@@ -1,0 +1,12 @@
+SELECT *
+FROM dual 
+WHERE is NULL = NULL;
+
+SELECT *
+FROM EMP
+--WHERE MGR is NULL; 
+WHERE NULL=NULL; -- 공집합으로 나옴
+-- is NULL로 써야 한다.
+
+SELECT MGR, NVL(MGR,0), COALESCE (NULL, MGR, 1) -- NULL 1이고 NULL이 아니면 MGR 컬럼 값
+FROM EMP;

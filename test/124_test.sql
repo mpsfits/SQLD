@@ -1,0 +1,26 @@
+-- TOP N QUARY
+-- ROWNUM
+
+SELECT ROWNUM, ENAME
+FROM EMP;
+
+--정답1
+SELECT ROWNUM, ENAME
+FROM EMP
+WHERE ROWNUM <= 5;
+
+
+-- FROM -> SELECT 순서로 실행되므로 WHERE 절의 RN은 테이블에서 없는 컬럼으로 인식되어 오류남
+SELECT ROWNUM RN, ENAME
+FROM EMP
+WHERE RN < 5;
+---
+
+
+
+-- 정답2
+--FROM -> SELECT 순서로 실행되므로 FROM 절 안의 인라인 뷰의 RN이 실행되고 WHERE의 RN이 실행되므로 오류발생x
+SELECT * FROM (
+SELECT ROWNUM RN, ENAME
+FROM EMP) 
+WHERE RN > 5 ;
